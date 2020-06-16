@@ -1,0 +1,25 @@
+version: '3'
+services:
+    
+    proxy:
+      container_name: proxy
+      build:
+        dockerfile: Dockerfile
+        context: ./
+      ports:
+        - '80:80'
+      networks:
+        - local
+
+    stromy-client-app:
+      container_name: stromy-client-app
+      build:
+        dockerfile: Dockerfile
+        context: ../stromy-client-app
+      ports:
+        - '4041:80'
+      networks:
+        - local
+
+networks:
+  local:
