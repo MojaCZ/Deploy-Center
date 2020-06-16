@@ -7,7 +7,7 @@ services:
         dockerfile: Dockerfile
         context: ./
       ports:
-        - '80:80'
+        - '4040:80'
       networks:
         - local
 
@@ -18,6 +18,16 @@ services:
         context: ../stromy-client-app
       ports:
         - '4041:80'
+      networks:
+        - local
+
+    stromy-admin-app:
+      container_name: stromy-admin-app
+      build:
+        dockerfile: Dockerfile
+        context: ../stromy-admin-app
+      ports:
+        - '4042:80'
       networks:
         - local
 
