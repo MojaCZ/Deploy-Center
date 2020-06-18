@@ -6,30 +6,65 @@ services:
       build:
         dockerfile: Dockerfile
         context: ./
+      restart: always
       ports:
         - '80:80'
+      volumes:
+        - './templates:/etc/nginx/templates'
+      environment:
+        - STROMY_CLIENT_APP_DOMAIN=${STROMY_CLIENT_APP_DOMAIN}
+        - STROMY_ADMIN_APP_DOMAIN=${STROMY_ADMIN_APP_DOMAIN}
+        - STROMY_API_DOMAIN=${STROMY_API_DOMAIN}
+        - PORTFOLIO_DOMAIN=${PORTFOLIO_DOMAIN}
       networks:
-        - local
+        - stromy
+        - others
+
+    portfolio:
+      container_name: portfolio
+      build:
+        dockerfile: Dockerfile
+        context: ../Portfolio
+      networks:
+        - others
+      ports:
+        - "4045:80"
 
     stromy-client-app:
       container_name: stromy-client-app
       build:
         dockerfile: Dockerfile
         context: ../stromy-client-app
-      # ports:
-      #   - '4041:80'
       networks:
-        - local
+        - stromy
 
     stromy-admin-app:
       container_name: stromy-admin-app
       build:
         dockerfile: Dockerfile
         context: ../stromy-admin-app
-      # ports:
-      #   - '4042:80'
       networks:
-        - local
+        - stromy
+        
+    stromy-api:
+      container_name: stromy-api
+      restart: always
+      build:
+        dockerfile: Dockerfile
+        context: ../stromy-api
+      networks:
+        - stromy
+      environment:
+        - PORT=8080
+        - DB_HOST=176.222.224.212
+        - DB_NAME=stromy
+        - DB_USER=moja
+        - DB_PW=4Th,u8U(*]ygE~7G
+        - DB_URL=mongodb://mealAdmin:g9p\KMSG`XxSZ+mY@176.222.224.212:27017/mealPlannerdb?authSource=mealPlannerdb
+      ports:
+        - 8080:8080
 
 networks:
-  local:
+  stromy:
+  others:
+  

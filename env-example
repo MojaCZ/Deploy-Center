@@ -1,0 +1,3 @@
+STROMY_CLIENT_APP_DOMAIN=stromy-client-app.mojacz.test
+STROMY_ADMIN_APP_DOMAIN=stromy-admin-app.mojacz.test
+STROMY_API_DOMAIN=stromy-api.mojacz.test
